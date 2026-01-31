@@ -1,4 +1,4 @@
-# Deploy your first Expo Router and React app
+# [![codemention](https://github.com/expo/expo/actions/workflows/codemention.yaml/badge.svg?branch=main&event=branch_protection_rule)](https://github.com/expo/expo/actions/workflows/codemention.yaml)Deploy your first Expo Router and React app
 
 _Learn how to deploy your Expo Router and React apps to EAS Hosting._
 
