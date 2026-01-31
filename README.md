@@ -1,81 +1,103 @@
-# Solana Templates
+# Deploy your first Expo Router and React app
 
-Official templates for [create-solana-dapp](https://github.com/solana-developers/create-solana-dapp).
+_Learn how to deploy your Expo Router and React apps to EAS Hosting._
 
-Browse all templates at https://templates.solana.com
+EAS Hosting is a react hosting service that allows you to deploy an exported Expo web build to a preview or production URL.
 
-## Usage
+This guide will walk you through the process of creating your first web deployment.
 
-Create a new Solana project using the interactive CLI:
+[Watch: Deploy your Expo Router web project](https://www.youtube.com/watch?v=NaKsfWciJLo)
 
-```sh
-# npm
-npm create solana-dapp@latest
+## Prerequisites
 
-# pnpm
-pnpm create solana-dapp@latest
+#### An Expo user account
 
-# yarn
-yarn create solana-dapp
+EAS Hosting is available to anyone with an Expo account, regardless of whether you pay for EAS or use the Free plan. You can sign up at [expo.dev/signup](https://expo.dev/signup).
+
+Paid subscribers can create more deployments, have more bandwidth, storage, requests, and may set up a custom domain. Learn more about different plans and benefits at [EAS pricing](https://expo.dev/pricing#host).
+
+#### An Expo Router web project
+
+Don't have a project yet? No problem. It's quick and easy to create a "Hello world" app that you can use with this guide.
+
+Run the following command to create a new project:
+
+```bash
+$ npx create-expo-app@latest my-app
 ```
 
-Or specify a template directly:
+<Step label="1">
+## Install the latest EAS CLI
 
-```sh
-npm create solana-dapp@latest -t gill-next-tailwind-basic
+EAS CLI is the command line app you will use to interact with EAS services from your terminal. To install it, run the command:
+
+```bash
+$ npm install --global eas-cli
 ```
 
-## Template Categories
+You can also use the above command to check if a new version of EAS CLI is available. We encourage you to always stay up to date with the latest version.
 
-- **Gill** - Modern templates using @solana/kit
-- **Web3.js** - Templates using @solana/web3.js (legacy)
-- **Mobile** - React Native templates for Solana Mobile
-- **Community** - Templates maintained by the community
+> We recommend using `npm` instead of `yarn` for global package installations. You may alternatively use `npx eas-cli@latest`. Remember to use that instead of `eas` whenever it's called for in the documentation.
 
-See [TEMPLATES.md](TEMPLATES.md) for the complete list.
+</Step>
 
-## Contributing
+<Step label="2">
+## Log in to your Expo account
 
-We welcome contributions!
+If you are already signed in to an Expo account using Expo CLI, you can skip the steps described in this section. If you are not, run the following command to log in:
 
-**Adding a new community template:**
-
-See the [Community Template Contributor Guide](COMMUNITY_TEMPLATE_GUIDE.md) for comprehensive instructions on contributing templates to the community/ directory.
-
-**Adding a new template:**
-
-1. Create your template in the appropriate directory (gill/, web3js/, mobile/, or community/)
-2. Add required metadata to package.json (see existing templates for examples)
-3. Include displayName, usecase, and og-image.png
-4. Run `pnpm generate` to update templates.json
-5. Open a PR with your changes
-
-**Improving existing templates:**
-
-- Report issues or suggest improvements
-- Submit PRs for bug fixes or enhancements
-- Update documentation
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
-
-## Development
-
-```sh
-pnpm install
-pnpm generate    # Generate templates.json and TEMPLATES.md
-pnpm lint        # Validate templates
-pnpm format      # Format code
+```bash
+$ eas login
 ```
 
-## Contributors
+You can check whether you are logged in by running `eas whoami`.
 
-<!-- automd:contributors github="solana-foundation/templates" license="MIT" -->
+</Step>
 
-Published under the [MIT](https://github.com/solana-foundation/templates/blob/main/LICENSE) license.
-Made by [community](https://github.com/solana-foundation/templates/graphs/contributors) 💛
-<br><br>
-<a href="https://github.com/solana-foundation/templates/graphs/contributors">
-<img src="https://contrib.rocks/image?repo=solana-foundation/templates" />
-</a>
+<Step label="3">
+## Prepare your project
 
-<!-- /automd -->
+For your app config file's [`expo.web.output`](https://docs.expo.dev/versions/latest/config/app/#output), decide whether to set it to either `single`, `static`, or `server`.
+
+- `single`: Exports your Expo app to a single-page app with only one `index.html` output
+- `static`: Exports your Expo app to a [statically generated web app](https://docs.expo.dev/router/web/static-rendering/)
+- `server`: Supports [server functions](https://docs.expo.dev/guides/server-components/#react-server-functions) and [API routes](https://docs.expo.dev/router/web/api-routes/) as well as static pages for your app
+
+> Don't worry if you're not sure which output mode you need, you can always change this value later and re-deploy.
+
+</Step>
+
+<Step label="4">
+### Export your app
+
+You need to export your web project into a **dist** directory. To do this, run:
+
+```bash
+$ npx expo export --platform web
+```
+
+> Remember to re-run this command every time before deploying.
+
+</Step>
+
+<Step label="5">
+
+### Deploy your app
+
+</Step>
+
+Now publish your website to EAS Hosting:
+
+```bash
+$ eas deploy
+```
+
+The first time you run this command, it will:
+
+1. Prompt you to connect an EAS project if you haven't done so yet
+2. Ask you to choose a preview subdomain name
+
+> **info** A **preview subdomain name** is a prefix used for the preview URL of your app.
+> For example, if you choose `my-app` as your preview subdomain name, your preview URL would look something like this: `https://my-app--or1170q9ix.expo.app/`, and your production URL would be: `https://my-app.expo.app/`.
+
+Once your deployment is complete, the CLI will output a preview URL for where your deployed app is accessible, as well as a link to the deployment details on the EAS Dashboard.
